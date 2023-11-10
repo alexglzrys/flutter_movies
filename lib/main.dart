@@ -11,6 +11,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Películas',
+      // Existen 2 temas predeterminados en Dart: light y dark
+      // Crea una copia del tema light, y solo personaliza el tema (color) de la barra de aplicaciones
+      theme: ThemeData.light()
+          .copyWith(appBarTheme: AppBarTheme(color: Colors.teal[600])),
       initialRoute: 'home',
       // Generar mapa con rutas de la aplicaciòn
       routes: {
