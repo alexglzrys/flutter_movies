@@ -66,7 +66,7 @@ class _MoviePoster extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           // Titulo de la película
           const Text(
             'El señor de los anillos y el regreso del maleficio de los 13 planetas',
