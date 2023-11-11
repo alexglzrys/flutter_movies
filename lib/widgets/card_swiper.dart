@@ -34,6 +34,8 @@ class CardSwiper extends StatelessWidget {
                 placeholder: AssetImage('assets/images/no-image.jpg'),
                 image: NetworkImage('https://via.placeholder.com/300x400'),
                 fit: BoxFit.cover,
+                // Ambas imágenes tendran el mismo alto, evitando desbordamientos por tamaños diferentes
+                height: 400,
               ),
             ),
           );

@@ -9,10 +9,14 @@ class DetailsScreen extends StatelessWidget {
     final String movie =
         ModalRoute.of(context)?.settings.arguments.toString() ?? 'no-info';
 
-    return const Scaffold(
+    return Scaffold(
         // CustomScrollView permite crear efectos de desplazamiento personalizados utilizando "slivers".
         body: CustomScrollView(
-      slivers: [_CustomAppBar()],
+      slivers: [
+        const _CustomAppBar(),
+        // Dado que CustomScrollView solo recibe hijos de tipo "sliver" que reaccionan a efectos de desplazamiento. SliverChildListDelegate permite pasar una lista de widgets clásicas
+        SliverList(delegate: SliverChildListDelegate([const _PosterAndTitle()]))
+      ],
     ));
   }
 }
@@ -44,7 +48,70 @@ class _CustomAppBar extends StatelessWidget {
           placeholder: AssetImage('assets/images/loading.gif'),
           image: NetworkImage('https://via.placeholder.com/500x300'),
           fit: BoxFit.cover,
+          // Ambas imágenes tendran el mismo alto, evitando desbordamientos por tamaños diferentes
+          height: 300,
         ),
+      ),
+    );
+  }
+}
+
+// Widget que representa el poster y titulo de la película
+class _PosterAndTitle extends StatelessWidget {
+  const _PosterAndTitle({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Recuperar información del tema principal de la aplicación referente a los textos
+    final TextTheme textTheme = Theme.of(context).textTheme;
+
+    return Container(
+      margin: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20),
+            child: const FadeInImage(
+              placeholder: AssetImage('assets/images/no-image.jpg'),
+              image: NetworkImage('https://via.placeholder.com/200x300'),
+              // Evitar que existan desbordamientos a consecuencia de tamaños diferentes tanto en la imagen final como en la temporal
+              height: 150,
+            ),
+          ),
+          const SizedBox(width: 20),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            // Titulo
+            Text(
+              'movie.title',
+              style: textTheme.headlineSmall,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            // Titulo original de la película
+            Text(
+              'movie.subtitle',
+              style: textTheme.titleMedium,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            // Promedio de votos
+            Row(
+              children: [
+                const Icon(
+                  Icons.star_outlined,
+                  size: 15,
+                  color: Colors.grey,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  'movie.votes',
+                  style: textTheme.bodySmall,
+                )
+              ],
+            )
+          ])
+        ],
       ),
     );
   }

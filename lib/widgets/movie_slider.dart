@@ -62,6 +62,9 @@ class _MoviePoster extends StatelessWidget {
               child: const FadeInImage(
                 placeholder: AssetImage('assets/images/no-image.jpg'),
                 image: NetworkImage('https://via.placeholder.com/300x400'),
+                // Ambas imágenes tendran el mismo alto, evitando desbordamientos por tamaños diferentes
+                height: 160,
+                width: double.infinity,
                 fit: BoxFit.cover,
               ),
             ),
