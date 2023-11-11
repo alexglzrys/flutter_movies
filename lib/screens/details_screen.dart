@@ -1,3 +1,4 @@
+import 'package:app_peliculas/widgets/casting_card.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -15,7 +16,15 @@ class DetailsScreen extends StatelessWidget {
       slivers: [
         const _CustomAppBar(),
         // Dado que CustomScrollView solo recibe hijos de tipo "sliver" que reaccionan a efectos de desplazamiento. SliverChildListDelegate permite pasar una lista de widgets clásicas
-        SliverList(delegate: SliverChildListDelegate([const _PosterAndTitle()]))
+        SliverList(
+            delegate: SliverChildListDelegate([
+          const _PosterAndTitle(),
+          const SizedBox(height: 20),
+          const _Overview(),
+          const _Overview(),
+          const _Overview(),
+          const CastingCard()
+        ]))
       ],
     ));
   }
@@ -39,6 +48,7 @@ class _CustomAppBar extends StatelessWidget {
           width: double.infinity,
           alignment: Alignment.bottomCenter,
           color: Colors.black12,
+          padding: const EdgeInsets.only(bottom: 12),
           child: const Text(
             'movie.title',
             style: TextStyle(fontSize: 16),
@@ -112,6 +122,23 @@ class _PosterAndTitle extends StatelessWidget {
             )
           ])
         ],
+      ),
+    );
+  }
+}
+
+// Widget que representa la descripción completa de la película
+class _Overview extends StatelessWidget {
+  const _Overview({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+      child: Text(
+        'Anim aliqua pariatur non aute commodo. Aute amet reprehenderit consectetur quis id laboris eu consectetur est incididunt ut proident. Nulla fugiat magna quis tempor. Cupidatat pariatur eu esse aliquip. Dolor ex laborum aute aute consectetur fugiat nisi excepteur esse veniam pariatur cillum.',
+        textAlign: TextAlign.justify,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }
