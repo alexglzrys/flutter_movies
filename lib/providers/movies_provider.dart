@@ -12,10 +12,13 @@ class MoviesProvider extends ChangeNotifier {
   final String _language = 'es-ES';
   // Propiedad publica que conteine el listado de peliculas en cartelera
   List<Movie> onDisplayMovies = [];
+  // Propiedad pública que contiene el lstado de pelúclas populares
+  List<Movie> popularMovies = [];
 
   MoviesProvider() {
     print('MoviesProvider incializado');
     getOnDisplayMovies();
+    getPopularMovies();
   }
 
   getOnDisplayMovies() async {
@@ -33,6 +36,20 @@ class MoviesProvider extends ChangeNotifier {
     // Almacenar el listado de peliculas en una propiedad pública para se tenga acceso desde otros lugares donde se consuma este provider
     onDisplayMovies = nowPlayingResponse.results;
     // Notificar a todos los oyentes que consumen el listado de peliculas en cartelera que ha hbido cambios, y por tanto deben redibujarse
+    notifyListeners();
+  }
+
+  // Obtener el listado de peliculas populares
+  getPopularMovies() async {
+    // Preparar el esquema URL que apunta al servicio de peliculas populares
+    var url = Uri.https(_baseUrl, '3/movie/popular',
+        {'language': _language, 'page': '1', 'api_key': _apiKey});
+    // Enviar la petición Http
+    var response = await http.get(url);
+    // Obtener una instancia de la respuesta de peliculas populares
+    final popularResponse = PopularResponse.fromRawJson(response.body);
+    // Almacenar el listado de películas populares con base a la página seleccionada sin perder la información anterior (páginación infinita)
+    popularMovies = [...popularMovies, ...popularResponse.results];
     notifyListeners();
   }
 }
