@@ -12,6 +12,17 @@ class CardSwiper extends StatelessWidget {
     // MediaQuery.of(context) devuelve una instancia de MediaQueryData que contiene información sobre las dimensiones y propiedades de la pantalla actual (dispositivo)
     // Prácticamente se obtiene el tamaño de la pantalla del dispositivo
     final size = MediaQuery.of(context).size;
+
+    // Para evitar problemas de contenido vacío en el widget Swiper,
+    // se muestra un CircularProgressIndicator hasta que la información que proviene del servicio este lista
+    if (movies.isEmpty) {
+      return SizedBox(
+        width: double.infinity,
+        height: size.height * 0.5,
+        child: const Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return SizedBox(
       width: double.infinity,
       // El alto del widget será el 50% del alto de la pantalla del dispositivo
