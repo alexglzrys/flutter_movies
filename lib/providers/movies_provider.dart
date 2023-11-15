@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:app_peliculas/models/now_playing_response.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,7 +26,10 @@ class MoviesProvider extends ChangeNotifier {
     // Enviar la petición Http
     var response = await http.get(url);
     // Decodificar la respuesta entregada por el servidor en un mapa
-    final Map<String, dynamic> decodeData = json.decode(response.body);
-    print(decodeData);
+    // final Map<String, dynamic> decodeData = json.decode(response.body);
+
+    // Generar una instancia de NowPlayingResponse a partir de la respuesta entregada por el servidor referente al listado de películas en cartelera
+    final nowPlayingResponse = NowPlayingResponse.fromRawJson(response.body);
+    print(nowPlayingResponse.results[0].title);
   }
 }
