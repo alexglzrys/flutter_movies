@@ -1,6 +1,4 @@
-import 'dart:convert';
-
-import 'package:app_peliculas/models/now_playing_response.dart';
+import 'package:app_peliculas/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -8,10 +6,12 @@ import 'package:http/http.dart' as http;
 
 // Para que esta clase pueda ser utilizada por el paquete Provider, es necesario que extienda de ChangeNotifier para notificar de posibles cambios a los oyentes que consuman dicho estado
 class MoviesProvider extends ChangeNotifier {
-  // Propiedades finales que hacen referencia al servicio o API que consume la aplicación
+  // Propiedades finales privadas que hacen referencia al servicio o API que consume la aplicación
   final String _baseUrl = 'api.themoviedb.org';
   final String _apiKey = '8ecc5be4b5b0099bbeaab602ec74b3b5';
   final String _language = 'es-ES';
+  // Propiedad publica que conteine el listado de peliculas en cartelera
+  List<Movie> onDisplayMovies = [];
 
   MoviesProvider() {
     print('MoviesProvider incializado');
@@ -30,6 +30,9 @@ class MoviesProvider extends ChangeNotifier {
 
     // Generar una instancia de NowPlayingResponse a partir de la respuesta entregada por el servidor referente al listado de películas en cartelera
     final nowPlayingResponse = NowPlayingResponse.fromRawJson(response.body);
-    print(nowPlayingResponse.results[0].title);
+    // Almacenar el listado de peliculas en una propiedad pública para se tenga acceso desde otros lugares donde se consuma este provider
+    onDisplayMovies = nowPlayingResponse.results;
+    // Notificar a todos los oyentes que consumen el listado de peliculas en cartelera que ha hbido cambios, y por tanto deben redibujarse
+    notifyListeners();
   }
 }

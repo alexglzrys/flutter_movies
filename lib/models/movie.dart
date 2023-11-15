@@ -37,6 +37,16 @@ class Movie {
     required this.voteCount,
   });
 
+  // La ventaja de los modelos es que podemos declarar métodos adicionales para realizar tareas específicas
+
+  // Getter para obtener el path completo de la imagen de portada
+  get fullPosterImage {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500$posterPath';
+    }
+    return 'https://i.stack.imgur.com/GNhx0.png';
+  }
+
   factory Movie.fromRawJson(String str) => Movie.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());

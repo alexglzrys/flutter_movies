@@ -1,11 +1,16 @@
+import 'package:app_peliculas/providers/movies_provider.dart';
 import 'package:app_peliculas/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // Obtener la instancia de MoviesProvider que se encuentra dentro del arbol de widgets
+    // Esta instancia se genera cuando se invoca a ChangeNotifierProvider dentro del listado de providers
+    final moviesProvider = Provider.of<MoviesProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -18,13 +23,13 @@ class HomeScreen extends StatelessWidget {
           IconButton(onPressed: () {}, icon: const Icon(Icons.search_outlined))
         ],
       ),
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             // Carrusel
-            CardSwiper(),
+            CardSwiper(movies: moviesProvider.onDisplayMovies),
             // Listado horizontal de películas
-            MovieSlider()
+            const MovieSlider()
           ],
         ),
       ),
