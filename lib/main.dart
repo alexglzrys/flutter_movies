@@ -11,7 +11,7 @@ class AppState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // MultiProvider() acepta una lista de proveedores de estado a los que pueden acceder los widgets descendiente de MyApp
+    // MultiProvider() acepta una lista de proveedores de estado a los que pueden acceder los widgets descendientes. En este caso de MyApp
     return MultiProvider(
       providers: [
         // ChangeNotifierProvider() crea una instancia singletón del proveedor especificado, escucha los cambios y notifica a sus oyentes de posibles cambios
