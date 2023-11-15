@@ -29,7 +29,8 @@ class HomeScreen extends StatelessWidget {
             // Carrusel
             CardSwiper(movies: moviesProvider.onDisplayMovies),
             // Listado horizontal de películas
-            const MovieSlider()
+            MovieSlider(
+                movies: moviesProvider.popularMovies, title: 'Populares')
           ],
         ),
       ),

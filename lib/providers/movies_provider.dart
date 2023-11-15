@@ -22,7 +22,6 @@ class MoviesProvider extends ChangeNotifier {
   }
 
   getOnDisplayMovies() async {
-    print('getOnDisplayMovies');
     // Preparar el esquema de la cadena URL que apunta al servicio de peliculas en cartelera
     var url = Uri.https(_baseUrl, '3/movie/now_playing',
         {'language': _language, 'page': '1', 'api_key': _apiKey});
